@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models  import Ride,ReuquestRide,TimeData,RideChat,Payment
+from .models  import Ride,ReuquestRide,TimeData,RideChat,Payment,Wallet,Notification
 from user.models import User
 
 
@@ -16,18 +16,17 @@ class TimeDataSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'phone_number']  # Include other fields as needed
+        fields = ['username', 'email', 'first_name', 'phone_number']  
 
 class RideSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(source='user.username', read_only=True)
-    first_name = serializers.CharField(source='user.first_name', read_only=True)
-    phone_number = serializers.CharField(source='user.phone_number', read_only=True)
-    ride_time = TimeDataSerializer()
-
+    
+    
+    user_details = UserSerializer(source="user",read_only=True)
+    time_detail = TimeDataSerializer(source="ride_time",read_only=True)
     class Meta:
         model = Ride
-        fields = ['id', 'user_name', 'source', 'first_name', 'phone_number', 'destination', 'source_latitude', 'source_longitude', 'destination_latitude', 'destination_longitude', 'passengers', 'date', 'ride_time', 'fare', 'vehicle_name', 'registration_number', 'landmark']
-
+        fields=('id','user','user_details','source','destination','passengers','date','fare','ride_time','time_detail')
+    
 class RequestRideSerializer(serializers.ModelSerializer):
     ride_details = RideSerializer(source='ride', read_only=True)
     request_user_details = UserSerializer(source='request_user', read_only=True)
@@ -40,14 +39,16 @@ class RideChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = RideChat
         fields = ['id', 'content', 'timestamp', 'sender_user', 'ride']
+class WalletSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Wallet
+        fields = "__all__"
 class UserdetailSerializer(serializers.ModelSerializer):
+    wallet = WalletSerializer()
     class Meta:
         model = User
         fields= '__all__'
-class RideSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ride
-        fields = '__all__'
+
 
 class ReuquestRideSerializer(serializers.ModelSerializer):
     ride = RideSerializer()
@@ -59,3 +60,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['user', 'content']

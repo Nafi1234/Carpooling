@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',include('user.urls')),
     path('auth/',include('auth.urls')),
-    path('publish/',include('publishride.urls'))
+    path('publish/',include('publishride.urls')),
+    path('chat/',include('Chat.urls'))
     
 ]

@@ -1,5 +1,5 @@
 from django.urls import path 
-from .views import RideCreateView,RideFilterView,Bookride,SelectedRide,UserRideDetails,UserDetail,Accept,Reject,PaymentReview,create_razorpay_order,TransactionAPIView
+from .views import RideCreateView,RideFilterView,Bookride,SelectedRide,UserRideDetails,UserDetail,Accept,Reject,PaymentReview,create_razorpay_order,TransactionAPIView,get_ride_details,cancel_ride,wallet,save_notification
 urlpatterns = [
     path('publishride',  RideCreateView.as_view()),
     path('rideavailable',RideFilterView.as_view()),
@@ -12,6 +12,12 @@ urlpatterns = [
     path('reject/<int:rideid>/', Reject.as_view(), name='reject-ride'),
     path('paymentreview/<int:rideid>',PaymentReview.as_view()),
     path('paymentgateway',create_razorpay_order),
-    path('verifygateway',TransactionAPIView.as_view())
+    path('verifygateway',TransactionAPIView.as_view()),
+    path('requestridedetail/<int:rideId>',get_ride_details),
+    path('cancel_ride/<int:ride_id>/', cancel_ride),
+    path('wallet',wallet),
+    path('notfiy',save_notification)
+    
+    
     
 ]

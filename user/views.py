@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .serializer  import UserSerializer,OTPverificationSerializer,UserLoginSerializer,UserDetailsSerializer,ForgotPasswordSerializer, VerifySerializer,ConfirmpasswordSerializer,ForgotOTPverificationSerializer
-
+from publishride.models import Wallet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -58,8 +58,6 @@ class OTPVerificationView(APIView):
         otp =request.data.get("otp")
         if email and otp is None:
             user = User.objects.get(email=email)
-            print("here i am printing the user",user)
-
             if user.resend_count < 3:
                 otp = user.generate_new_otp()
                 user.otp = otp
@@ -84,17 +82,18 @@ class OTPVerificationView(APIView):
         
             if (current_time - user.otp_timestamp).total_seconds() <= 60:
                 if user.otp == otp:
-                    print("haii",user.otp,otp) 
                     user.is_active = True
                     user.otp = ""
                     user.save()
+                    wallet = Wallet.objects.create(user=user, balance=0.0)
+                    wallet.save()
                     return Response({"message": "User successfully registered"}, status=status.HTTP_200_OK)
                 else:
                     user.resend_count += 1
                     user.save()
                     if user.resend_count < 3:
                         otp = user.generate_new_otp()
-                        user.otp = otp
+                        user.otp = otp 
                         user.otp_timestamp = current_time
                         user.save()
                         send_otp_email(email, otp)
@@ -123,7 +122,6 @@ class UserLoginView(APIView):
         serializer = UserLoginSerializer(data=request.data)
         print(serializer)
         if serializer.is_valid():
-            print("goood")
             user = serializer.validated_data["user"]
             print(user)
             refresh = RefreshToken.for_user(user)
@@ -170,12 +168,10 @@ class Forgotpassword(APIView):
 class Forgototpverification(APIView):
     def post(self,request):
         serializer=ForgotOTPverificationSerializer(data=request.data)
-        print("yes")
         if serializer.is_valid():
             email = serializer.validated_data['email'] 
             user=User.objects.get(email=email)
             otp=serializer.validated_data['otp']
-            print("hai",email)
             print(user.otp)
             print(otp)
             if user.otp==otp:
