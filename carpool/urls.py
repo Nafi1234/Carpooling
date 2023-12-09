@@ -21,11 +21,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('user/',include('user.urls')),
-    path('auth/',include('auth.urls')),
-    path('publish/',include('publishride.urls')),
-    path('chat/',include('Chat.urls'))
+    path('api/admin/', admin.site.urls),
+    path('api/user/',include('user.urls')),
+    path('api/auth/',include('auth.urls')),
+    path('api/publish/',include('publishride.urls')),
+    path('api/chat/',include('Chat.urls'))
     
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
