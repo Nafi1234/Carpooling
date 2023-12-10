@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-bqs0e(sh70hdh&#@58i!qo)fj)9fjd5aui$))z1_1ph_ke605%
 AUTH_USER_MODEL='user.User'
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.226.227.141', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -104,12 +104,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'carpooling',
-        'USER':'postgres',
-        'PASSWORD': 'Summer09',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'saifu',
+        'USER': 'saifuuser',
+        'PASSWORD': 'secure123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
