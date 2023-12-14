@@ -33,7 +33,6 @@ from channels.routing import ProtocolTypeRouter
 import carpool.routing  
 import django
 
-django.setup()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'carpool.settings')
 
