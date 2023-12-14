@@ -8,8 +8,8 @@ from user.models import User
 from publishride.serializers import UserSerializer
 
 class ChatSerializer(serializers.ModelSerializer):
-    user_detail= UserSerializer(source="receiver",read_only=True)
+    user_detail = UserSerializer(source="receiver", read_only=True)
+
     class Meta:
         model = Chat
-        fields = ['id', 'sender', 'receiver', 'content', 'timestamp']
-
+        fields = ['id', 'sender', 'receiver', 'content', 'timestamp', 'user_detail']

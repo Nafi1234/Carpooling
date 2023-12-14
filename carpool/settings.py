@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-bqs0e(sh70hdh&#@58i!qo)fj)9fjd5aui$))z1_1ph_ke605%
 AUTH_USER_MODEL='user.User'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['54.226.227.141', '127.0.0.1',  'localhost']
 
 # Application definition
 
@@ -112,7 +112,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 
 # Password validation
