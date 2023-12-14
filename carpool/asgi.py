@@ -24,15 +24,14 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
   #  ),
  #    "http": django_asgi_app,
 #})
-#channel_layer = get_channel_layer() 
-# asgi.py
+#channel_layer = get_channel_layer()
 
 import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 import carpool.routing  
 import django
-
+django.setup()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'carpool.settings')
 
