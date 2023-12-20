@@ -31,9 +31,10 @@ import django
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 from channels.auth import AuthMiddlewareStack
-from channels.routing import  URLRouter
-django.setup()
+from channels.routing import URLRouter
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'carpool.settings')
+django.setup()
 
 from Chat.routing import websocket_urlpatterns
 
